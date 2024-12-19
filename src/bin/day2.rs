@@ -1,18 +1,11 @@
 use std::{error::Error, num::ParseIntError};
 
-
-
 fn import_data() -> Result<Vec<Vec<i32>>, Box<dyn Error>> {
-
     let data = std::fs::read_to_string("data/day2.txt")?
         .lines()
-        .map(|line| {
-            line.split(" ")
-                .map(|s| s.parse::<i32>())
-                .collect()
-        }).collect::<Result<Vec<Vec<i32>>, ParseIntError>>()?;
+        .map(|line| line.split(" ").map(|s| s.parse::<i32>()).collect())
+        .collect::<Result<Vec<Vec<i32>>, ParseIntError>>()?;
     Ok(data)
-
 }
 
 fn is_report_completely_safe(report: &Vec<i32>) -> bool {
@@ -20,7 +13,7 @@ fn is_report_completely_safe(report: &Vec<i32>) -> bool {
         .windows(2)
         .map(|levels| levels[1] - levels[0])
         .all(|diff| diff > 0 && diff <= 3);
-    
+
     let safely_decreasing = report
         .windows(2)
         .map(|levels| levels[1] - levels[0])
@@ -33,7 +26,7 @@ fn part1(data: &[Vec<i32>]) -> i32 {
     let number_of_safe_reports = data
         .iter()
         .filter(|report| is_report_completely_safe(report))
-        .count() as i32;        
+        .count() as i32;
     number_of_safe_reports
 }
 
@@ -49,22 +42,16 @@ fn is_report_safe(report: &Vec<i32>) -> bool {
         if is_report_completely_safe(&filtered_report) {
             is_safe = true;
         };
-    };
+    }
     is_safe
-    
 }
 
 fn part2(data: &[Vec<i32>]) -> i32 {
-    let number_of_safe_reports = data
-        .iter()
-        .filter(|report| is_report_safe(report))
-        .count() as i32;        
+    let number_of_safe_reports = data.iter().filter(|report| is_report_safe(report)).count() as i32;
     number_of_safe_reports
 }
 
-
 fn main() -> Result<(), Box<dyn Error>> {
-
     let data = import_data()?;
 
     let result_part1 = part1(&data);
@@ -111,6 +98,3 @@ mod tests {
         assert!(result == 4);
     }
 }
-
-
-    

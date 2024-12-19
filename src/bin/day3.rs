@@ -1,14 +1,10 @@
-use std::{error::Error, num::ParseIntError};
 use regex::Regex;
-
-
+use std::{error::Error, num::ParseIntError};
 
 fn import_data() -> Result<String, Box<dyn Error>> {
-
     let data = std::fs::read_to_string("data/day3.txt")?;
 
     Ok(data)
-
 }
 
 ///Extract the pair of number in a string of type mul(a,b) and return a*b.
@@ -17,12 +13,12 @@ fn get_product_from_mul_string(mul_string: &str) -> Result<i32, Box<dyn Error>> 
         .replace("mul(", "")
         .replace(")", "")
         .split(",")
-        .map(|s| {s.parse::<i32>()})
+        .map(|s| s.parse::<i32>())
         .collect::<Result<Vec<i32>, ParseIntError>>()?;
-    Ok(pairs[0]*pairs[1])
+    Ok(pairs[0] * pairs[1])
 }
 
-fn part1(data: &str) -> Result<i32, Box<dyn Error>> { 
+fn part1(data: &str) -> Result<i32, Box<dyn Error>> {
     let regular_expression = Regex::new(r"mul\((\d+),(\d+)\)")?;
 
     let sum: i32 = regular_expression
@@ -35,7 +31,6 @@ fn part1(data: &str) -> Result<i32, Box<dyn Error>> {
     Ok(sum)
 }
 
-
 fn part2(data: &str) -> Result<i32, Box<dyn Error>> {
     let regular_expression = Regex::new(r"mul\((\d+),(\d+)\)|do\(\)|don't\(\)")?;
     let mut sum = 0;
@@ -43,8 +38,8 @@ fn part2(data: &str) -> Result<i32, Box<dyn Error>> {
     for capture in regular_expression.captures_iter(data) {
         let capture_as_string = &capture[0];
         match capture_as_string {
-            "do()" => keep_calculating=true,
-            "don't()" => keep_calculating=false,
+            "do()" => keep_calculating = true,
+            "don't()" => keep_calculating = false,
             _ if keep_calculating => sum += get_product_from_mul_string(capture_as_string)?,
             _ => {}
         }
@@ -53,9 +48,7 @@ fn part2(data: &str) -> Result<i32, Box<dyn Error>> {
     Ok(sum)
 }
 
-
 fn main() -> Result<(), Box<dyn Error>> {
-
     let data = import_data()?;
 
     let result_part1 = part1(&data)?;
@@ -98,8 +91,4 @@ mod tests {
         assert!(result == 48);
         Ok(())
     }
-
 }
-
-
-    
