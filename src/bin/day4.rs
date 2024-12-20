@@ -33,7 +33,6 @@ fn part1(data: &str) -> Result<i32, Box<dyn Error>> {
     for idx1 in 0..number_of_rows {
         for idx2 in 0..(number_of_columns - 3) {
             let partial_vector = (0..4)
-                .into_iter()
                 .map(|i| data_with_1234[idx1][idx2 + i])
                 .collect::<Vec<i32>>();
             if partial_vector == vec![1, 2, 3, 4] || partial_vector == vec![4, 3, 2, 1] {
@@ -45,7 +44,6 @@ fn part1(data: &str) -> Result<i32, Box<dyn Error>> {
     for idx1 in 0..(number_of_rows - 3) {
         for idx2 in 0..number_of_columns {
             let partial_vector = (0..4)
-                .into_iter()
                 .map(|i| data_with_1234[idx1 + i][idx2])
                 .collect::<Vec<i32>>();
             if partial_vector == vec![1, 2, 3, 4] || partial_vector == vec![4, 3, 2, 1] {
@@ -57,7 +55,6 @@ fn part1(data: &str) -> Result<i32, Box<dyn Error>> {
     for idx1 in 0..(number_of_rows - 3) {
         for idx2 in 0..(number_of_columns - 3) {
             let partial_vector_diagonally_down = (0..4)
-                .into_iter()
                 .map(|i| data_with_1234[idx1 + i][idx2 + i])
                 .collect::<Vec<i32>>();
             if partial_vector_diagonally_down == vec![1, 2, 3, 4]
@@ -66,7 +63,6 @@ fn part1(data: &str) -> Result<i32, Box<dyn Error>> {
                 xmas_count += 1;
             }
             let partial_vector_diagonally_up = (0..4)
-                .into_iter()
                 .map(|i| data_with_1234[idx1 + 3 - i][idx2 + i])
                 .collect::<Vec<i32>>();
             if partial_vector_diagonally_up == vec![1, 2, 3, 4]
@@ -89,11 +85,9 @@ fn part2(data: &str) -> Result<i32, Box<dyn Error>> {
     for idx1 in 0..(number_of_rows - 2) {
         for idx2 in 0..(number_of_columns - 2) {
             let diagonally_up = (0..3)
-                .into_iter()
                 .map(|i| data_with_1234[idx1 + i][idx2 + i])
                 .collect::<Vec<i32>>();
             let diagonally_down = (0..3)
-                .into_iter()
                 .map(|i| data_with_1234[idx1 + 2 - i][idx2 + i])
                 .collect::<Vec<i32>>();
             if (diagonally_up == vec![2, 3, 4] || diagonally_up == vec![4, 3, 2])
