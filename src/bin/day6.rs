@@ -1,6 +1,7 @@
 use std::hash::Hash;
 use std::{collections::HashSet, error::Error};
 use std::time::Instant;
+use rayon::prelude::*;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 enum Direction {
@@ -168,26 +169,21 @@ fn part2(
     problem_area: &ProblemArea,
     obstacles: &Vec<Obstacle>,
 ) -> Result<i32, Box<dyn Error>> {
-    let mut sum = 0;
-
     let possible_new_obstacle_positions = get_all_positions_visited_by_guard(guard.clone(), problem_area, obstacles);
     
-    for (x, y) in possible_new_obstacle_positions {
-        let additional_obstacle = Obstacle { position: (x, y) };
-        if (x, y) != guard.position {
-            let guard_stock = does_guard_loops_forever(
+    let sum = possible_new_obstacle_positions
+        .par_iter()
+        .filter(|(x, y)| {
+            let additional_obstacle = Obstacle { position: (*x, *y) };
+            does_guard_loops_forever(
                 guard.clone(),
                 problem_area,
                 obstacles,
                 additional_obstacle,
-            );
-            if guard_stock {
-                sum += 1;
-            }
-        }
-    }
+            )
+        }).count();
 
-    Ok(sum)
+    Ok(sum as i32)
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
