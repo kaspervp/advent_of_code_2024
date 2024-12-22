@@ -83,7 +83,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 mod tests {
     use super::*;
 
-    fn get_test_data_part1() -> String {
+    fn get_test_data() -> String {
         "
         190: 10 19
         3267: 81 40 27
@@ -101,26 +101,24 @@ mod tests {
 
     #[test]
     fn test_part1() -> Result<(), Box<dyn Error>> {
-        let data_as_string = get_test_data_part1();
+        let data_as_string = get_test_data();
 
         let input_data = extract_elements_from_string(data_as_string)?;
 
         let result = part1(&input_data)?;
 
-        println!("{result}");
         assert!(result == 3749);
         Ok(())
     }
 
     #[test]
     fn test_part2() -> Result<(), Box<dyn Error>> {
-        let data_as_string = get_test_data_part1();
+        let data_as_string = get_test_data();
 
         let input_data = extract_elements_from_string(data_as_string)?;
 
         let result = part2(&input_data)?;
 
-        println!("{result}");
         assert!(result == 11387);
         Ok(())
     }

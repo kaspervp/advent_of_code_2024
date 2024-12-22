@@ -118,7 +118,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 mod tests {
     use super::*;
 
-    fn get_test_data_part1() -> String {
+    fn get_test_data() -> String {
         "
         MMMSXXMASM
         MSAMXMSMSA
@@ -137,7 +137,7 @@ mod tests {
 
     #[test]
     fn test_part1() -> Result<(), Box<dyn Error>> {
-        let data = get_test_data_part1();
+        let data = get_test_data();
 
         let result = part1(&data)?;
 
@@ -147,7 +147,7 @@ mod tests {
 
     #[test]
     fn test_part2() -> Result<(), Box<dyn Error>> {
-        let data = get_test_data_part1();
+        let data = get_test_data();
 
         let result = part2(&data)?;
 

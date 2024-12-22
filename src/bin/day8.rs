@@ -171,7 +171,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 mod tests {
     use super::*;
 
-    fn get_test_data_part1() -> String {
+    fn get_test_data() -> String {
         "
         ............
         ........0...
@@ -192,28 +192,26 @@ mod tests {
 
     #[test]
     fn test_part1() -> Result<(), Box<dyn Error>> {
-        let data_as_string = get_test_data_part1();
+        let data_as_string = get_test_data();
 
         let (frequency_to_antennas_map, problem_area) =
             extract_elements_from_string(data_as_string);
 
         let result = part1(&frequency_to_antennas_map, &problem_area)?;
 
-        println!("{result}");
         assert!(result == 14);
         Ok(())
     }
 
     #[test]
     fn test_part2() -> Result<(), Box<dyn Error>> {
-        let data_as_string = get_test_data_part1();
+        let data_as_string = get_test_data();
 
         let (frequency_to_antennas_map, problem_area) =
             extract_elements_from_string(data_as_string);
 
         let result = part2(&frequency_to_antennas_map, &problem_area)?;
 
-        println!("{result}");
         assert!(result == 34);
         Ok(())
     }

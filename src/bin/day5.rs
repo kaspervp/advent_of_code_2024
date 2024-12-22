@@ -104,7 +104,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 mod tests {
     use super::*;
 
-    fn get_test_data_part1() -> (Vec<(i32, i32)>, Vec<Vec<i32>>) {
+    fn get_test_data() -> (Vec<(i32, i32)>, Vec<Vec<i32>>) {
         let page_ordering = vec![
             (47, 53),
             (97, 13),
@@ -142,7 +142,7 @@ mod tests {
 
     #[test]
     fn test_part1() -> Result<(), Box<dyn Error>> {
-        let (page_ordering, updates_pages) = get_test_data_part1();
+        let (page_ordering, updates_pages) = get_test_data();
 
         let result = part1(&page_ordering, &updates_pages)?;
 
@@ -152,7 +152,7 @@ mod tests {
 
     #[test]
     fn test_part2() -> Result<(), Box<dyn Error>> {
-        let (page_ordering, updates_pages) = get_test_data_part1();
+        let (page_ordering, updates_pages) = get_test_data();
 
         let result = part2(&page_ordering, &updates_pages)?;
 
