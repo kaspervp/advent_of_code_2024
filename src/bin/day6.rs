@@ -1,7 +1,7 @@
-use std::hash::Hash;
-use std::{collections::HashSet, error::Error};
-use std::time::Instant;
 use rayon::prelude::*;
+use std::hash::Hash;
+use std::time::Instant;
+use std::{collections::HashSet, error::Error};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 enum Direction {
@@ -68,7 +68,7 @@ fn extract_elements_from_string(
         .collect::<Vec<Vec<char>>>();
 
     let problem_area = ProblemArea {
-        size: (data_as_matrix.len() as i32, data_as_matrix[0].len() as i32),
+        size: (data_as_matrix[0].len() as i32, data_as_matrix.len() as i32),
     };
     let mut obstacles: Vec<Obstacle> = vec![];
     let mut guard: Option<Guard> = None;
@@ -101,7 +101,7 @@ fn import_data() -> Result<String, Box<dyn Error>> {
     Ok(std::fs::read_to_string("data/day6.txt")?)
 }
 
-fn get_all_positions_visited_by_guard(    
+fn get_all_positions_visited_by_guard(
     mut guard: Guard,
     problem_area: &ProblemArea,
     obstacles: &Vec<Obstacle>,
@@ -169,19 +169,16 @@ fn part2(
     problem_area: &ProblemArea,
     obstacles: &Vec<Obstacle>,
 ) -> Result<i32, Box<dyn Error>> {
-    let possible_new_obstacle_positions = get_all_positions_visited_by_guard(guard.clone(), problem_area, obstacles);
-    
+    let possible_new_obstacle_positions =
+        get_all_positions_visited_by_guard(guard.clone(), problem_area, obstacles);
+
     let sum = possible_new_obstacle_positions
         .par_iter()
         .filter(|(x, y)| {
             let additional_obstacle = Obstacle { position: (*x, *y) };
-            does_guard_loops_forever(
-                guard.clone(),
-                problem_area,
-                obstacles,
-                additional_obstacle,
-            )
-        }).count();
+            does_guard_loops_forever(guard.clone(), problem_area, obstacles, additional_obstacle)
+        })
+        .count();
 
     Ok(sum as i32)
 }

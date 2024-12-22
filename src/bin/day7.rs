@@ -1,23 +1,17 @@
-use std::num::ParseIntError;
 use std::error::Error;
+use std::num::ParseIntError;
 
-
-fn extract_elements_from_string(
-    data: String,
-) -> Result<Vec<(i64, Vec<i64>)>, ParseIntError> {
-    data
-        .lines()
-        .map(|row| 
-            row
-                .replace(":", "")
+fn extract_elements_from_string(data: String) -> Result<Vec<(i64, Vec<i64>)>, ParseIntError> {
+    data.lines()
+        .map(|row| {
+            row.replace(":", "")
                 .split(" ")
                 .map(|s| s.parse::<i64>())
-                .collect::<Result<Vec<i64>, ParseIntError>>())
-        .map(|numbers| {
-            match numbers {
-                Ok(n) => Ok((n[0], n[1..].to_vec())),
-                Err(e) => Err(e)
-            }
+                .collect::<Result<Vec<i64>, ParseIntError>>()
+        })
+        .map(|numbers| match numbers {
+            Ok(n) => Ok((n[0], n[1..].to_vec())),
+            Err(e) => Err(e),
         })
         .collect()
 }
@@ -28,7 +22,7 @@ fn calculate_plus_and_times(left: Vec<i64>, right: i64) -> Vec<i64> {
     result
 }
 
-fn concatenate_digits(left: i64, right: i64) -> i64{
+fn concatenate_digits(left: i64, right: i64) -> i64 {
     left * (10_i64.pow(right.to_string().len() as u32)) + right
 }
 
@@ -43,38 +37,31 @@ fn import_data() -> Result<String, Box<dyn Error>> {
     Ok(std::fs::read_to_string("data/day7.txt")?)
 }
 
-fn part1(
-    input_data: &Vec<(i64, Vec<i64>)>,
-) -> Result<i64, Box<dyn Error>> {
+fn part1(input_data: &Vec<(i64, Vec<i64>)>) -> Result<i64, Box<dyn Error>> {
     let mut sum = 0;
-    for (result_ref, operands) in input_data{
-        
+    for (result_ref, operands) in input_data {
         let mut result = vec![operands[0]];
         for operand in operands[1..].to_vec() {
             result = calculate_plus_and_times(result, operand);
-        };
+        }
         if result.contains(&result_ref) {
             sum += result_ref;
         };
-    };
+    }
     Ok(sum)
-    
 }
 
-fn part2(
-    input_data: &Vec<(i64, Vec<i64>)>,
-) -> Result<i64, Box<dyn Error>> {
+fn part2(input_data: &Vec<(i64, Vec<i64>)>) -> Result<i64, Box<dyn Error>> {
     let mut sum = 0;
-    for (result_ref, operands) in input_data{
-        
+    for (result_ref, operands) in input_data {
         let mut result = vec![operands[0]];
         for operand in operands[1..].to_vec() {
             result = calculate_plus_times_and_concatenation(result, operand);
-        };
+        }
         if result.contains(&result_ref) {
             sum += result_ref;
         };
-    };
+    }
     Ok(sum)
 }
 
@@ -137,5 +124,4 @@ mod tests {
         assert!(result == 11387);
         Ok(())
     }
-
 }
