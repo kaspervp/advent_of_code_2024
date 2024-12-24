@@ -7,13 +7,13 @@ fn file_blocks_from_string(data: String) -> FileSystem {
     for (index, character) in data.char_indices() {
         let number = character.to_digit(10).expect("A digit 0-9.") as i32;
         if index % 2 == 0 {
-            data_blocks.extend((0..number).into_iter().map(|_| {
+            data_blocks.extend((0..number).map(|_| {
                 Some(File {
                     id: (index as i32) / 2,
                 })
             }));
         } else {
-            data_blocks.extend((0..number).into_iter().map(|_| None));
+            data_blocks.extend((0..number).map(|_| None));
         }
     }
     FileSystem {
@@ -45,7 +45,7 @@ impl FileSystem {
                 _ => {}
             }
         }
-        return true;
+        true
     }
 
     fn memory_length(&self) -> usize {

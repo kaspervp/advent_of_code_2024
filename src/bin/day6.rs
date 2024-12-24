@@ -78,11 +78,11 @@ fn extract_elements_from_string(
         for (x, element) in row.iter().enumerate() {
             match element {
                 '#' => obstacles.push(Obstacle {
-                    position: (x as i32, y as i32),
+                    position: (x as i32, y),
                 }),
                 '^' => {
                     guard = Some(Guard {
-                        position: (x as i32, y as i32),
+                        position: (x as i32, y),
                         direction: Direction::North,
                     })
                 }
@@ -92,8 +92,8 @@ fn extract_elements_from_string(
     }
 
     match guard {
-        Some(g) => return Ok((problem_area, g, obstacles)),
-        _ => return Err("Guard was not found in date.".into()),
+        Some(g) => Ok((problem_area, g, obstacles)),
+        _ => Err("Guard was not found in date.".into()),
     }
 }
 
@@ -161,7 +161,7 @@ fn does_guard_loops_forever(
         positions_and_direction_visited.insert((guard.position, guard.direction));
     }
 
-    return false;
+    false
 }
 
 fn part2(

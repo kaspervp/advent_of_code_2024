@@ -44,7 +44,7 @@ fn part1(input_data: &Vec<(i64, Vec<i64>)>) -> Result<i64, Box<dyn Error>> {
         for operand in operands[1..].to_vec() {
             result = calculate_plus_and_times(result, operand);
         }
-        if result.contains(&result_ref) {
+        if result.contains(result_ref) {
             sum += result_ref;
         };
     }
@@ -58,7 +58,7 @@ fn part2(input_data: &Vec<(i64, Vec<i64>)>) -> Result<i64, Box<dyn Error>> {
         for operand in operands[1..].to_vec() {
             result = calculate_plus_times_and_concatenation(result, operand);
         }
-        if result.contains(&result_ref) {
+        if result.contains(result_ref) {
             sum += result_ref;
         };
     }

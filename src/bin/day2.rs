@@ -17,7 +17,7 @@ fn is_report_completely_safe(report: &Vec<i32>) -> bool {
     let safely_decreasing = report
         .windows(2)
         .map(|levels| levels[1] - levels[0])
-        .all(|diff| diff < 0 && diff >= -3);
+        .all(|diff| (-3..0).contains(&diff));
 
     safely_increasing || safely_decreasing
 }

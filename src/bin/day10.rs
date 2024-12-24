@@ -13,7 +13,7 @@ fn height_map_from_string(data: String) -> Result<HeightMap, ParseIntError> {
         .rev()
         .collect::<Result<Vec<Vec<i32>>, ParseIntError>>()?;
 
-    Ok(HeightMap { heights: heights })
+    Ok(HeightMap { heights })
 }
 
 fn import_data() -> Result<String, Box<dyn Error>> {
@@ -58,12 +58,10 @@ impl HeightMap {
     }
 
     fn step_one_up_from_position(&self, position: Position) -> Vec<Position> {
-        let possible_directions = vec![
-            Position { x: 1, y: 0 },
+        let possible_directions = [Position { x: 1, y: 0 },
             Position { x: 0, y: -1 },
             Position { x: -1, y: 0 },
-            Position { x: 0, y: 1 },
-        ];
+            Position { x: 0, y: 1 }];
         let old_height = self.get_height(position);
 
         possible_directions

@@ -50,9 +50,9 @@ fn extract_elements_from_string(data: String) -> (HashMap<Frequency, Vec<Antenna
                     let frequency = Frequency { symbol: *element };
                     frequency_to_antennas_map
                         .entry(frequency)
-                        .or_insert(Vec::new())
+                        .or_default()
                         .push(Antenna {
-                            position: (x as i32, y as i32),
+                            position: (x as i32, y),
                         })
                 }
             }
@@ -102,10 +102,9 @@ fn part1(
         let antinodes: HashSet<Antinode> = antennas
             .iter()
             .combinations(2)
-            .map(|antennas| {
+            .flat_map(|antennas| {
                 calculate_two_antinodes_inside_problem_area(antennas[0], antennas[1], problem_area)
             })
-            .flat_map(|s| s)
             .collect();
         all_anti_nodes.extend(antinodes);
     }
@@ -123,7 +122,6 @@ fn calculate_all_antinodes_inside_problem_area(
     let max_number_of_antinodes = max(problem_area.size.0, problem_area.size.1);
 
     ((-max_number_of_antinodes)..(max_number_of_antinodes))
-        .into_iter()
         .map(|index| Antinode {
             position: (
                 antenna_1.position.0 + index * delta_x,
@@ -143,10 +141,9 @@ fn part2(
         let antinodes: HashSet<Antinode> = antennas
             .iter()
             .combinations(2)
-            .map(|antennas| {
+            .flat_map(|antennas| {
                 calculate_all_antinodes_inside_problem_area(antennas[0], antennas[1], problem_area)
             })
-            .flat_map(|s| s)
             .collect();
         all_anti_nodes.extend(antinodes);
     }
