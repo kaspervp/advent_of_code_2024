@@ -170,13 +170,7 @@ impl GardenRegion {
                     .iter()
                     .contains(&(position + Position::new(-1, 0)))
             })
-            .filter(|&&position| {
-                !visited_edges.contains(&Edge {
-                    position: position,
-                    side: EdgeSide::Left,
-                })
-            })
-            .next()
+            .find(|&&position| !visited_edges.contains(&Edge::new(position, EdgeSide::Left)))
         {
             let mut current_edge = Edge::new(*position_with_left_edge, EdgeSide::Left);
             while !visited_edges.contains(&current_edge) {
@@ -267,7 +261,7 @@ impl Garden {
     fn total_bulk_discounted_price(&self) -> i32 {
         self.regions
             .iter()
-            .map(|(id, region)| region.number_of_sides() * region.area())
+            .map(|(_, region)| region.number_of_sides() * region.area())
             .sum()
     }
 }
