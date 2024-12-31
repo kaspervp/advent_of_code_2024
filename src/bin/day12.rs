@@ -3,8 +3,6 @@ use std::error::Error;
 use std::hash::Hash;
 use std::ops::Add;
 
-use itertools::Itertools;
-
 fn garden_regions_from_string(data: String) -> Vec<Vec<char>> {
     data.lines()
         .map(|s| s.chars().collect())
@@ -164,12 +162,7 @@ impl GardenRegion {
         while let Some(position_with_left_edge) = self
             .positions
             .iter()
-            .filter(|&&position| {
-                !self
-                    .positions
-                    .iter()
-                    .contains(&(position + Position::new(-1, 0)))
-            })
+            .filter(|&&position| !self.positions.contains(&(position + Position::new(-1, 0))))
             .find(|&&position| !visited_edges.contains(&Edge::new(position, EdgeSide::Left)))
         {
             let mut current_edge = Edge::new(*position_with_left_edge, EdgeSide::Left);
