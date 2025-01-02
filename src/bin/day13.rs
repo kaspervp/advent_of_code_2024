@@ -90,7 +90,6 @@ fn import_data() -> Result<String, Box<dyn Error>> {
 }
 
 fn part1(claw_machines: &[ClawMachine]) -> Result<i64, Box<dyn Error>> {
-
     let total_price = claw_machines
         .iter()
         .filter_map(|claw_machine| claw_machine.get_price_to_solve())
